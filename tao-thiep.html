@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tạo thiệp mời | Khánh Ly & Tiến Dũng</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f7f1e9;
+      color: #603c3b;
+      font-family: Georgia, "Times New Roman", serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 15px;
+    }
+    .card {
+      width: 100%;
+      max-width: 430px;
+      background: #fffdfb;
+      border: 1px solid #e7d5c4;
+      border-radius: 18px;
+      padding: 30px 22px;
+      box-shadow: 0 10px 35px #6b3a3012;
+      text-align: center;
+    }
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #ad895b;
+    }
+    h1 {
+      font-size: 28px;
+      color: #8d2639;
+      font-weight: normal;
+      margin: 16px 0 8px;
+    }
+    .subtitle { font-style: italic; margin-bottom: 28px; }
+    label {
+      display: block;
+      text-align: left;
+      font-size: 14px;
+      margin: 18px 0 8px;
+    }
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #dfcfc1;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 16px;
+      color: #603c3b;
+    }
+    button, .preview {
+      width: 100%;
+      display: block;
+      border: none;
+      border-radius: 30px;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      margin-top: 12px;
+    }
+    button.primary { background: #8d2639; color: white; }
+    button.secondary, .preview {
+      background: #f4eae1;
+      color: #8d2639;
+    }
+    .result {
+      display: none;
+      margin-top: 24px;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+    }
+    .linkbox {
+      background: #faf6f1;
+      border: 1px solid #ebdfd4;
+      border-radius: 9px;
+      padding: 12px;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .message { font-size: 13px; min-height: 20px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">WEDDING INVITATION</div>
+    <h1>♡ Tạo thiệp mời ♡</h1>
+    <div class="subtitle">Khánh Ly & Tiến Dũng</div>
+
+    <label for="guest">Tên khách mời</label>
+    <input id="guest" placeholder="Ví dụ: Bác Hùng và gia đình"
+           maxlength="120" autocomplete="off">
+
+    <label for="side">Khách mời thuộc bên nào?</label>
+    <select id="side">
+      <option value="bride">Nhà gái</option>
+      <option value="groom">Nhà trai</option>
+      <option value="both">Cả hai bên</option>
+    </select>
+
+    <button class="primary" id="create">TẠO LINK THIỆP MỜI</button>
+
+    <section class="result" id="result">
+      <p>Đường link dành cho khách:</p>
+      <div class="linkbox" id="link"></div>
+      <button class="primary" id="copy">SAO CHÉP LINK</button>
+      <button class="secondary" id="share">CHIA SẺ</button>
+      <a class="preview" id="preview" target="_blank"
+         rel="noopener noreferrer">XEM TRƯỚC THIỆP</a>
+    </section>
+    <p class="message" id="message" role="status"></p>
+  </main>
+
+  <script>
+    const SITE = "https://nguyenvuong27122005.github.io/Thiepcuoi/";
+    let currentLink = "";
+
+    const guestInput = document.getElementById("guest");
+    const sideInput = document.getElementById("side");
+    const result = document.getElementById("result");
+    const message = document.getElementById("message");
+
+    document.getElementById("create").addEventListener("click", () => {
+      const guest = guestInput.value.trim();
+      if (!guest) {
+        message.textContent = "Vui lòng nhập tên khách mời.";
+        guestInput.focus();
+        return;
+      }
+
+      const url = new URL(SITE);
+      url.searchParams.set("guest", guest);
+      url.searchParams.set("side", sideInput.value);
+      currentLink = url.toString();
+
+      document.getElementById("link").textContent = currentLink;
+      document.getElementById("preview").href = currentLink;
+      result.style.display = "block";
+      message.textContent = "Đã tạo link thiệp mời.";
+    });
+
+    function invalidate() {
+      currentLink = "";
+      result.style.display = "none";
+      message.textContent = "";
+    }
+    guestInput.addEventListener("input", invalidate);
+    sideInput.addEventListener("change", invalidate);
+
+    document.getElementById("copy").addEventListener("click", async () => {
+      if (!currentLink) return;
+      try {
+        await navigator.clipboard.writeText(currentLink);
+        message.textContent = "Đã sao chép link! Bạn có thể gửi qua Zalo.";
+      } catch {
+        message.textContent = "Không thể tự sao chép. Hãy chọn và sao chép link phía trên.";
+      }
+    });
+
+    document.getElementById("share").addEventListener("click", async () => {
+      if (!currentLink) return;
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Thiệp cưới Khánh Ly & Tiến Dũng",
+            url: currentLink
+          });
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            message.textContent = "Hãy sao chép link để gửi thủ công.";
+          }
+        }
+      } else {
+        message.textContent = "Hãy nhấn Sao chép link rồi gửi qua Zalo.";
+      }
+    });
+  </script>
+</body>
+</html>
