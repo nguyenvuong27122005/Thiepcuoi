@@ -1,0 +1,199 @@
+/* BACKUP OF STYLE.CSS - THIỆP CƯỚI KHÁNH LY & TIẾN DŨNG
+   Tạo bản sao lưu trước khi tối ưu khoảng cách 2 thẻ sự kiện Nhà Gái và Nhà Trai
+*/
+
+/* ==========================================================================
+   BẢN SAO LƯU GỐC CỦA CÁC SELECTOR CEREMONY TRƯỚC KHI CHỈNH SỬA
+   ========================================================================== */
+
+/* 1. KHỐI CEREMONY CƠ BẢN (LINES 840-966) */
+.ceremony-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 44px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.ceremony-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-primary), var(--color-gold));
+}
+
+.ceremony-invitation-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--color-gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.ceremony-heading {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-primary-dark);
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.ceremony-heading-main {
+    font-size: clamp(26px, 4.8vw, 36px);
+    font-weight: 500;
+    line-height: 1.25;
+    white-space: nowrap;
+    color: var(--color-primary-dark);
+}
+
+.ceremony-heading-side {
+    font-size: clamp(24px, 4.4vw, 34px);
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--color-primary);
+}
+
+.ceremony-datetime-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 28px;
+    background: var(--color-bg-ivory);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 22px;
+}
+
+.ceremony-weekday {
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.ceremony-full-date {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: 2px;
+}
+
+.ceremony-time-badge {
+    font-family: var(--font-serif);
+    font-size: clamp(17px, 3.8vw, 22px);
+    font-style: italic;
+    color: var(--color-gold-dark);
+    margin-top: 4px;
+    white-space: nowrap;
+}
+
+.ceremony-location-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--color-text-heading);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.ceremony-address-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    max-width: 380px;
+    margin: 0 auto 24px;
+}
+
+.ceremony-address-text span {
+    display: block;
+    white-space: nowrap;
+}
+
+.ceremony-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* 2. KHỐI MEDIA QUERY MOBILE <= 540PX */
+    .ceremony-card {
+        padding: 32px 14px;
+    }
+
+    .ceremony-heading {
+        gap: 2px;
+        margin-bottom: 18px;
+    }
+
+    .ceremony-datetime-badge {
+        padding: 12px 18px;
+    }
+
+    .ceremony-full-date {
+        font-size: 22px;
+    }
+
+    .ceremony-time-badge {
+        font-size: 16px !important;
+        white-space: nowrap !important;
+    }
+
+    .ceremony-location-label {
+        font-size: clamp(10.5px, 3.2vw, 12px) !important;
+        letter-spacing: 0.5px !important;
+        white-space: nowrap !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .ceremony-address-text {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+/* 3. KHỐI OVERRIDES CUỐI FILE */
+.ceremony-card--church {
+    padding-bottom: 52px !important;
+}
+
+.ceremony-heading {
+    margin-bottom: 28px !important;
+}
+
+.ceremony-datetime-badge {
+    padding: 12px 20px !important;
+    margin-bottom: 16px !important;
+}
+
+.ceremony-time-badge {
+    font-size: clamp(18px, 4vw, 22px) !important;
+    margin-top: 8px !important;
+}
+
+.ceremony-location-label {
+    font-size: 13px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px !important;
+    color: var(--color-text-heading);
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+}
